@@ -6,7 +6,7 @@ export const callServer = async (
     method, endpoint, payload
 ) => {
     try {
-
+        console.log(localStorage.getItem('token'), method)
         const response = await axios({
             method,
             url:  endpoint,

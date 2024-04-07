@@ -1,9 +1,9 @@
 
 import express from 'express';
-import {v5} from 'uuid';
-import {create} from 'ipfs';
+import { v5 } from 'uuid';
+import { create } from 'ipfs';
 const ipfs = create();
-import {Web3} from 'web3';
+import { Web3 } from 'web3';
 import cors from 'cors';
 import jwt from "jsonwebtoken";
 
@@ -11,7 +11,7 @@ import User from './database.js';
 
 import 'dotenv/config';
 
-import bodyParser from'body-parser';
+import bodyParser from 'body-parser';
 
 
 const port = process.env.port || 3000;
@@ -29,30 +29,30 @@ const web3 = new Web3(new Web3.providers.HttpProvider(process.env.RPC_URL));
 async function uploadToIPFS(file) {
     const added = await ipfs.add(file);
     return added.cid.string;
-  }
+}
 
 
 import MyContract from "../Smart_Contract/artifacts/contracts/DocuVerse.sol/DocuVerse.json" with { type: "json" };
 import authMiddleWare from './middleWares/authMiddleWare.js';
 
-const contractAddress = process.env.CONTRACT_ADDRESS; 
+const contractAddress = process.env.CONTRACT_ADDRESS;
 // const myContract = new web3.eth.Contract(MyContract.abi, contractAddress);
 
 
 
-app.post('/createUser',async (req,res)=>{
+app.post('/createUser', async (req, res) => {
     const userName = req.body.userName;
     const password = req.body.password;
-    console.log(req.body,userName,req.body.password);
-    try{
-        const user= await User.findOne({
+    console.log(req.body, userName, req.body.password);
+    try {
+        const user = await User.findOne({
             userName: userName
         })
-    
-        if(user==null){
+
+        if (user == null) {
             const MY_NAMESPACE = '1b671a64-40d5-491e-99b0-da01ff1f3341';
-            const userID = v5(userName,MY_NAMESPACE);
-            const newUser = new User( {
+            const userID = v5(userName, MY_NAMESPACE);
+            const newUser = new User({
                 userName: userName,
                 password: password,
                 userID: userID
@@ -64,24 +64,24 @@ app.post('/createUser',async (req,res)=>{
                 success: true,
                 message: "user is created",
             });
-            
+
         }
-        else{
+        else {
             console.log("User already existed");
             return res.send({
                 success: false,
                 message: "UserName is already exist try different user name",
             });
-            
+
         }
     }
-    catch(error){
+    catch (error) {
         return res.send({
-            sucess:false,
+            sucess: false,
             message: error.message,
-        });
+        });
     }
-    
+
 })
 
 // app.post('/addDocument',authMiddleWare,async(req,res)=>{
@@ -108,47 +108,66 @@ app.post('/createUser',async (req,res)=>{
 //     catch(error){
 //         console.log(error.message);
 //     }
-    
-    
-// })
 
-app.post('/signIn',async(req,res)=>{
+
+// })
+let user = null;
+app.post('/signIn', async (req, res) => {
     try {
-        const user =await User.findOne({userName: req.body.userName});
-        if(!user){
+        user = await User.findOne({ userName: req.body.userName });
+        if (!user) {
             return res.send({
                 success: false,
                 message: "user not found",
             });
         }
-        
+
         const validPassword = (req.body.password == user.password);
-        if(!validPassword){
+        if (!validPassword) {
             return res.send({
-                success:false,
-                message:"Invalid passward",
+                success: false,
+                message: "Invalid passward",
             });
         }
 
-        const token =await jwt.sign({userID: user.userID},process.env.JWT,{expiresIn: '1d'});
+        const token = await jwt.sign({ userID: user.userID }, process.env.JWT, { expiresIn: '1d' });
         return res.send({
             success: true,
-            message:"User logged in sucessfully",
+            message: "User logged in sucessfully",
             data: token,
         })
     } catch (error) {
         return res.send({
-            sucess:false,
+            sucess: false,
             message: error.message,
-        });
-    }
+        });
+    }
 })
 
-app.get('/documents',authMiddleWare,async(req,res)=>{
+app.get('/documents', async (req, res) => {
+    // console.log(req.body)
+    console.log(user.userName)
+    try {
+        if(user==null){
+            return res.send({
+                success: false,
+                message: error.message,
+            });
+        }
+        const docList = await myContract.methods.getDocuments(user.userID);
+        console.log(docList);
 
+    }
+    catch(error){
+        return res.send({
+            success: false,
+            message: error.message,
+        });
+    }
+    
 })
 
 
-app.listen(port,()=>{
-    console.log("Server Started At Port:"+port);
+app.listen(port, () => {
+    console.log("Server Started At Port:" + port);
 });

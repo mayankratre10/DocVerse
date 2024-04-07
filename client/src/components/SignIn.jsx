@@ -4,7 +4,7 @@ import "./style.scss";
 import { callServer } from "../utils/helper";
 
 
-function SignIn({setContent}) {
+function SignIn({setContent,setUser}) {
     const formValidation = async(e)=>{
         e.preventDefault()
         const formData = {
@@ -20,8 +20,12 @@ function SignIn({setContent}) {
         }
         
         const response = await callServer('post','/signIn',formData);
+        console.log(response)
         if(response.success==true){
             localStorage.setItem('token',response.data);
+            const data = {userName:formData.userName,emailID:formData.emailID};
+            localStorage.setItem('user',JSON.stringify(data));
+            setUser(data);
             setContent('home');
         }
     }

@@ -1,0 +1,39 @@
+.header{
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    height: 5rem;
+    // background-color: rgb(255, 255, 255);
+    img{
+        border: none;
+        margin-left: 2rem;
+        width: 10rem;
+        height: auto;
+    }
+    .user{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-right: 2rem;
+        .userIcon{
+            width: 3rem;
+            height: auto;
+            border: none;
+            margin-right: 1rem;
+        }
+        p{
+            margin-right: 2rem;
+            color: rgb(255, 255, 255);
+            font-size: 1.25rem;
+        }
+        button{
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            color: red;
+            cursor: pointer;
+        }
+    }
+    
+}
