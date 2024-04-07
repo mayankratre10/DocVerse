@@ -1,6 +1,6 @@
-const mongoose= require('mongoose');
+import mongoose from 'mongoose';
 
-require('dotenv').config();
+import 'dotenv/config';
 
 const uri = process.env.DATABASE_URL;
 console.log(uri);
@@ -17,9 +17,9 @@ connection.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 const userSchema = new mongoose.Schema({
     userName: String,
-    userId: Number,
+    userID: String,
     password: String
   });
   
   const User = mongoose.model('User', userSchema);
-  module.exports = User;
+  export default User;

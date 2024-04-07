@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+.container {
+    position: absolute;
+    /* Position element absolutely */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Center element horizontally and 
+    vertically */
+
+    width: 500px;
+    background-color: #201c1c;
+    /* Light gray background */
+    border-radius: 5px;
+    /* Rounded corners */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+    padding: 30px;
+    /* Add some padding inside the form */
+
+    form {
+        font-family: "Montserrat", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 300;
+        font-style: normal;
+        display: flex;
+        /* Arrange elements horizontally */
+        flex-direction: column;
+        /* Stack elements vertically */
+        gap: 15px;
+        /* Add space between form elements */
+
+        h2 {
+            text-align: center;
+            /* Center the title text */
+            margin-bottom: 15px;
+            /* Add some space below the title */
+        }
+
+        input,
+        button {
+            width: 100%;
+            /* Make input fields and button full width */
+            padding: 10px;
+            border: 1px solid #ccc;
+            /* Light border for inputs and button */
+            border-radius: 3px;
+            /* Rounded corners for inputs and button */
+        }
+
+        button {
+            background-color:#245ace;
+            color: white;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            margin-top: 2rem;
+            height: 2.5rem;
+        }
+        .warning{
+            display:none;
+            font-size: .8rem;
+            color: rgb(255, 122, 122);
+        }
+    }
+
+    .toggle{
+        display: flex;
+        font-size: small;
+        margin: 10px;
+        justify-content: flex-end;
+        p{
+
+            text-decoration: underline;
+        }
+        .change{
+            text-decoration: none;
+            margin-left: 5px;
+            color: #2492d1;
+            cursor: pointer;
+        }
+    }
+}

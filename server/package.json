@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Server for DocVerse",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "dev": "node server.js",
     "server": "nodemon server.js"
@@ -18,9 +19,13 @@
   },
   "homepage": "https://github.com/MAYANKRATRE10/DocVerse#readme",
   "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "ipfs": "^0.66.1",
     "ipfs-http-client": "^60.0.1",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.3.0",
     "multer": "^1.4.5-lts.1",
     "uuid": "^9.0.1",

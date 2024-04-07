@@ -46,7 +46,7 @@ contract DocuVerse {
 
         require(register[_userID] == true, "User doesn't exist");
 
-        require(users[_userID].allDocumentIDs.length < _documentID, "Document with documentID already present,please use unique documentID");
+        require(users[_userID].allDocumentIDs.length < _documentID, "Document with documentID already present,please use unique documentID,");
 
 
         users[_userID].allDocumentIDs.push(_documentID);
