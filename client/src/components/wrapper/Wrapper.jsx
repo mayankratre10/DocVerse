@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from 'react'
 import './style.scss'
-import Document from './document/Document'
+import ViewDocument from './document/Document'
 import { callServer,callServerFile } from '../../utils/helper'
 import  axios from 'axios'
 axios.defaults.baseURL = 'http://localhost:3000';
@@ -13,15 +13,16 @@ function Wrapper({user}) {
     const [docList, setDocList] = useState([]);
 
 
-    useEffect(()=>{
-        const loadData =async()=>{
-            const formData = {
-                "userName":user.userName,
-            }
-            const response = await callServer('post','/documents',formData);
-            console.log(response)
-            setDocList(response.documentList);
+    const loadData =async()=>{
+        const formData = {
+            "userName":user.userName,
         }
+        const response = await callServer('post','/documents',formData);
+        console.log(response)
+        if(response.documentList!=null)
+        setDocList(response.documentList);
+    }
+    useEffect(()=>{
         loadData();
     },[])
 
@@ -39,10 +40,12 @@ function Wrapper({user}) {
 
         const response = await callServerFile('post','/addDocument',formData);
         console.log(response)
+        loadData();
         
     }
 
   return (
+    
     <div className='wrapper'>
         <div className='addDocument'>
         <form onSubmit={addDocument} method='post' encType='multipart/form-data'>
@@ -55,9 +58,9 @@ function Wrapper({user}) {
             <button type='submit'>Add</button>
         </form>
         </div>
-        {
+        {docList.length!=0 &&
             docList.map((doc)=>{
-                return (<Document key={doc.docID} doc={doc}/>)
+                return (<ViewDocument key={doc.docID} doc={doc}/>)
             })
         }
 

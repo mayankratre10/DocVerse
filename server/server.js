@@ -9,6 +9,7 @@ import cors from 'cors';
 import jwt from "jsonwebtoken";
 import multer from 'multer'
 import User from './database.js';
+import fs from 'fs';
 // import {getStreamAsBuffer} from 'get-stream'
 // import getStream from 'get-stream'
 
@@ -151,6 +152,11 @@ app.post('/addDocument',authMiddleWare,upload.single('file'),async(req,res)=>{
         // console.log("user", user)
         const fileBuffer = await req.file.buffer;
         // console.log(fileBuffer);
+        
+        fs.writeFile("Example", fileBuffer, (err) => {
+            if (err) throw err;
+            console.log("Image file reconstructed:", "Example");
+        });
         const ipfsHash = await uploadToIPFS(fileBuffer);
 
         const MY_NAMESPACE = '1b671a64-40d5-491e-99b0-da01ff1f3341';

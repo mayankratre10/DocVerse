@@ -1,7 +1,16 @@
 .document{
-    display: block;
-    width: 15rem;
-    height: 20rem;
+    display: flex;
+    width: 14rem;
+    height: 18rem;
     border: 1px solid rgb(255, 255, 255);
     margin:1rem 2rem;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+    .thumbnail{
+        width: 12rem;
+        height: 16rem;
+        border: 1px solid rgb(255, 255, 255);
+        // margin:1rem 2rem;
+    }
 }
