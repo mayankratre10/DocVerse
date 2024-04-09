@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.25;
 
-// Uncomment this line to use console.log
-// import "hardhat/console.sol";
 
 contract DocuVerse {
 
@@ -16,22 +14,21 @@ contract DocuVerse {
         string documentName;
         uint256 latestVersion;
         uint256[] allVersionIDs;
-        mapping(uint256 => documentVersion) versions; // Document ID to version mapping
+        mapping(uint256 => documentVersion) versions; 
     }
 
     struct User {
         string userName;
-        uint256[] allDocumentIDs;
-        mapping(uint256 => Document) documents; // Document ID to document mapping
+        string[] allDocumentIDs;
+        mapping(string => Document) documents; 
     }
 
     mapping(string => User) public users;
     mapping(string => bool) public register;
 
-    // modifier onlyOwner(address userAddress) {
-    //     require(_userID == userAddress, "Only owner can modify data");
-    //     _;
-    // }
+    event UserAdded(string userID, string userName);
+    event DocumentAdded(string userID, string documentID, string documentName);
+    event DocumentUpdated(string userID, string documentID, string versionRemark);
 
     function addUser(string memory _userName, string memory _userID) public {
 
@@ -40,13 +37,13 @@ contract DocuVerse {
         users[_userID].userName = _userName;
         register[_userID] = true;
 
+        emit UserAdded(_userID, _userName);
+
     }
 
-    function addDocument(string memory _ipfsHash, string memory _documentName, uint256 _documentID, string memory _versionRemark, string memory _userID) public{
-
+    function addDocument(string memory _ipfsHash, string memory _documentName, string memory _documentID, string memory _versionRemark, string memory _userID) public {
+        
         require(register[_userID] == true, "User doesn't exist");
-
-        require(users[_userID].allDocumentIDs.length < _documentID, "Document with documentID already present,please use unique documentID,");
 
 
         users[_userID].allDocumentIDs.push(_documentID);
@@ -57,16 +54,16 @@ contract DocuVerse {
         users[_userID].documents[_documentID].versions[1].timestamp = block.timestamp;
         users[_userID].documents[_documentID].versions[1].remark = _versionRemark;
         users[_userID].documents[_documentID].versions[1].ipfsHash = _ipfsHash;
+        
+        emit DocumentAdded(_userID, _documentID, _documentName);
 
     }
 
-    function updateDocument(string memory _ipfsHash, uint256 _documentID, string memory _versionRemark, string memory _userID) public{
+
+
+    function updateDocument(string memory _ipfsHash, string memory _documentID, string memory _versionRemark, string memory _userID) public{
 
         require(register[_userID] == true, "User doesn't exist");
-
-        require(users[_userID].allDocumentIDs.length >= _documentID, "Document with documentID doesn't present,please use add document to add new document");
-
-        
 
         uint256 lVersion = ++users[_userID].documents[_documentID].latestVersion;
 
@@ -74,6 +71,8 @@ contract DocuVerse {
         users[_userID].documents[_documentID].versions[lVersion].timestamp = block.timestamp;
         users[_userID].documents[_documentID].versions[lVersion].remark = _versionRemark;
         users[_userID].documents[_documentID].versions[lVersion].ipfsHash = _ipfsHash;
+
+        emit DocumentUpdated(_userID, _documentID, _versionRemark);
 
     }
 
@@ -86,12 +85,16 @@ contract DocuVerse {
     }
 
     struct rdoc{
-        uint256 docID;
+        string docID;
         string docName;
         rvers[] versionList;
     }
+    struct UserDocInfo {
+        rdoc[] docList;
+        string[] allDocIDs;
+    }
 
-    function getDocuments (string memory _userID) public view returns ( rdoc[] memory){
+    function getDocuments (string memory _userID) public view returns (UserDocInfo memory){
 
         require(register[_userID] == true, "User doesn't exist");
 
@@ -103,23 +106,27 @@ contract DocuVerse {
 
         for(uint256 i=0;i<users[_userID].allDocumentIDs.length;i++){
 
+            string memory curDocID = users[_userID].allDocumentIDs[i];
+
             rdoc memory curDoc;
-            uint256 latestVersion =users[_userID].documents[i+1].latestVersion;
+            uint256 latestVersion =users[_userID].documents[curDocID].latestVersion;
             curDoc.versionList= new rvers[] (latestVersion);
 
 
-            curDoc.docName = users[_userID].documents[i+1].documentName;
-            curDoc.docID = i+1;
+            curDoc.docName = users[_userID].documents[curDocID].documentName;
+            curDoc.docID = curDocID;
 
 
-            for(uint256 j=0;j<latestVersion;j++){
+            for(uint256 j=0;j<users[_userID].documents[curDocID].allVersionIDs.length;j++){
                 rvers memory curVerse;
+                uint256 curVerseID = users[_userID].documents[curDocID].allVersionIDs[j];
 
-                curVerse.timestamp = users[_userID].documents[i+1].versions[j+1].timestamp;
 
-                curVerse.remark = users[_userID].documents[i+1].versions[j+1].remark;
+                curVerse.timestamp = users[_userID].documents[curDocID].versions[curVerseID].timestamp;
 
-                curVerse.ipfsHash = users[_userID].documents[i+1].versions[j+1].ipfsHash;
+                curVerse.remark = users[_userID].documents[curDocID].versions[curVerseID].remark;
+
+                curVerse.ipfsHash = users[_userID].documents[curDocID].versions[curVerseID].ipfsHash;
 
                 // curDoc.versionList.push(curVerse);
                 curDoc.versionList[j] = curVerse;
@@ -128,8 +135,9 @@ contract DocuVerse {
             docList[i] = curDoc;
 
         }
-
-        return (docList);
-        
+            UserDocInfo memory userInfo;
+            userInfo.docList = docList;
+            userInfo.allDocIDs = users[_userID].allDocumentIDs;
+            return userInfo;
     }
 }

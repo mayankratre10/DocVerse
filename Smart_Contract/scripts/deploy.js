@@ -11,8 +11,8 @@ async function main() {
   const DocuVerse = await hre.ethers.getContractFactory("DocuVerse");
   const DocVerse = await DocuVerse.deploy();
   await DocVerse.waitForDeployment();
-  const contractAddress = DocVerse.address;
-    console.log(`Contract deployed to: ${contractAddress}`);
+  const contractAddress = await DocVerse.address;
+    console.log("Contract deployed to:" ,contractAddress);
 
 }
 
