@@ -22,8 +22,8 @@
       --detailGradient: linear-gradient(0.37deg,#04205c .99%,   #08497e  100%);
       --gradient2: linear-gradient(0.37deg, #003f86 .99%, #011133 100%);
       --gradient3: linear-gradient(98.37deg, #126291 .99%, #273c44 100%);
-      --gradient4: linear-gradient(98.37deg, #7da6c2 0.99%, #3b3c58 100%);
-      --gradient5: linear-gradient(98.37deg, #046925 0.99%, #3d443d 100%);
+      --gradient4: linear-gradient(0.37deg, #1f2c35 0.99%, #263249 100%);
+      --gradient5: linear-gradient(98.37deg, rgb(30, 31, 51) 0.99%, #234f69 100%);
   }
   
   * {
@@ -34,7 +34,7 @@
   
   body {
     min-height: 100vh;
-    background: var(--gradient2);
+    background: var(--gradient4);
   }
   
   ::-webkit-scrollbar {

@@ -5,7 +5,23 @@
     display: flex;
     flex-wrap: wrap; 
     justify-content: flex-start;
-    margin: 0 auto; 
+    margin: 0; 
+    .error{
+        color: red;
+    }
+    .control{
+        height: 5rem;
+        width: 100%;
+        .addDocbtn{
+            background-color: rgb(34, 48, 58);
+            box-shadow: 0 0 .5rem rgb(60, 83, 105);
+            border: none;
+            border-radius: 10px;
+            width: 10rem;
+            height: 3rem;
+            cursor: pointer;
+        }
+    }
     .addDocument{
         width: 15rem;
         height: 20rem;

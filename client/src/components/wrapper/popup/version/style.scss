@@ -1,0 +1,28 @@
+.verseData{
+
+
+    .versionData {
+        display: flex;
+        width: 14rem;
+        height: 18rem;
+        border: 2px solid rgb(255, 255, 255);
+        border-radius: 8px;
+        margin: 1rem 2rem 1px;
+        background-color: rgb(255, 255, 255);
+        justify-content: center;
+        align-items: center;
+    
+        box-shadow: 0 0 .5rem rgb(133, 133, 133);
+        .thumbnail {
+            width: 12rem;
+            height: 16rem;
+            border: 1px solid rgb(255, 255, 255);
+            // margin:1rem 2rem;
+            cursor: pointer;
+        }
+    }
+    }
+    .docName {
+        display: flex;
+        justify-content: center;
+    }

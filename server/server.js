@@ -130,18 +130,13 @@ const upload = multer({ storage: storage })
 app.post('/addDocument',authMiddleWare,upload.single('file'),async(req,res)=>{
     console.log("add document req");
     console.log(req.body)
-    // console.log(req.file);
-    // console.log(req);
-    
-    
+     
     if (!req.file) {
         return res.status(400).json({ message: 'No file uploaded' });
     }
 
     try{
 
-        // const stream = await req.file.stream;
-        // console.log(stream)
         const user = await User.findOne({userName:req.body.userName});
         if(!user){
             res.send({
@@ -149,14 +144,8 @@ app.post('/addDocument',authMiddleWare,upload.single('file'),async(req,res)=>{
                 message:"please login again, user is not found"
             })
         }
-        // console.log("user", user)
         const fileBuffer = await req.file.buffer;
-        // console.log(fileBuffer);
         
-        fs.writeFile("Example", fileBuffer, (err) => {
-            if (err) throw err;
-            console.log("Image file reconstructed:", "Example");
-        });
         const ipfsHash = await uploadToIPFS(fileBuffer);
 
         const MY_NAMESPACE = '1b671a64-40d5-491e-99b0-da01ff1f3341';
@@ -169,6 +158,47 @@ app.post('/addDocument',authMiddleWare,upload.single('file'),async(req,res)=>{
         console.log("response from addDocument in smart contract",response);
 
         res.send("Document Successfully Added");
+
+    }
+    catch(error){
+        console.log(error);
+        res.send({
+            success:false,
+            message:error.message
+        })
+    }
+
+})
+
+app.post('/addVersion',authMiddleWare,upload.single('file'),async(req,res)=>{
+    console.log("add Version req");
+    console.log(req.body)
+     
+    if (!req.file) {
+        return res.status(400).json({ message: 'No file uploaded' });
+    }
+
+    try{
+
+        const user = await User.findOne({userName:req.body.userName});
+        if(!user){
+            res.send({
+                success:false,
+                message:"please login again, user is not found"
+            })
+        }
+        const fileBuffer = await req.file.buffer;
+        
+        const ipfsHash = await uploadToIPFS(fileBuffer);
+
+
+        console.log("ipfs hash:",ipfsHash);
+        console.log("userID:", user.userID);
+        console.log("documentID:", req.body.docID)
+        const response = await myContract.methods.updateDocument(ipfsHash,req.body.docID,req.body.remark,user.userID).send({from:accountAddress,gas:9000000});
+        console.log("response from addDocument in smart contract",response);
+
+        res.send("new Document Version Successfully Added");
 
     }
     catch(error){
