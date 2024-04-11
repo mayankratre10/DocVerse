@@ -18,6 +18,12 @@
     /* Subtle shadow */
     padding: 30px;
     /* Add some padding inside the form */
+    .createdBy{
+        font-size: 1px;
+        color: var(rgb(5, 41, 61));
+        opacity: .1;
+        font-weight: 100;
+    }
 
     form {
         font-family: "Montserrat", sans-serif;
