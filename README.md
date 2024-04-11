@@ -1,6 +1,7 @@
 ## Document Version Storage
 
-This is a secure blockchain-based application for document version storage.
+This is a secure blockchain-based application for document version storage. The documents uploaded to IPFS and the hash values are stored in blockchain.
+Here you can create your account, and add documents and for each document, you can add a new version of it. Images and PDF files are allowed.
 
 **Technology Stack:**
 
@@ -8,12 +9,14 @@ This is a secure blockchain-based application for document version storage.
 * Node.js
 * Ganache (Test network for development)
 * Solidity (Smart contract programming language)
+* IPFS 
 
 ## Running the application locally
 
 **Prerequisites:**
 
 - Node.js and npm (or yarn) installed on your system.
+- Also Make sure you running IPFS in your local system, if you want to use remote IPFS, then change the IPFS URL in the server.js file
 
 **Steps:**
 
