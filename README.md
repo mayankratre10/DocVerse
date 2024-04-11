@@ -44,7 +44,7 @@ SignUp Page:
 
 
 Home Page:
-![Screenshot (142)](https://github.com/MAYANKRATRE10/DocVerse/assets/82997237/941202bc-4309-4ccf-9f77-18573159e3ae)
+![Screenshot (135)](https://github.com/MAYANKRATRE10/DocVerse/assets/82997237/3fa19074-d563-4130-b4a3-f352ded19f23)
 
 ![Screenshot (137)](https://github.com/MAYANKRATRE10/DocVerse/assets/82997237/3c7dc8ce-8545-4ee8-ae83-d6d402a21de5)
 
