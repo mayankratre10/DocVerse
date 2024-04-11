@@ -1,56 +1,103 @@
-This is a Document Version Storage, a secure blockchain-based application.
-Technology used:
-React
-Nodejs
-Ganache (Ganache test network used during development)
-Solidity for smart contract deployed in the test network
+## Document Version Storage
 
-To run the application in the local environment
-1: Fork the repository
-2: Clone the repository in your local system
-3: use npm i to install all dependencies in each folder client and server
-4: Now deploy your smart contract in any blockchain network like Ethereum ( For testing purposes you can you ganache)
-5: To deploy first create the .evn variable in your smart contract root and add
-    PRIVATE_KEY: ( KEY FOR YOUR BLOCKCHAIN ACCOUNT)
-    PROVIDER_URL: (RPC URL) 
-6: In your smart contract root, Now use the command: npx hardhat ./scripts/deploy.js --network _networkName
-    _networkName: Example Ganache or Ethereum
+This is a secure blockchain-based application for document version storage.
 
-7: Now in the root of the server directory again create .env
-  PRIVATE_KEY: account private key
-  RPC_URL: RPC URL of network 
-  CONTRACT_ADDRESS: you get after deployment
-  ACCOUNT_ADDRESS: your blockchain account
-  DATABASE_URL: use MongoDB atlas with the DataBase name as docverse
-  JWT: Jwt secret key
-  Now run the server using the command: npm run dev or npm run server
+**Technology Stack:**
 
-8: Now in your client folder, create .env
-  VITE_SERVER_URL: put the server URL example ('http://localhost:3000')
-  use the command: npm run dev, to run the client
-👌
-That's it.......😁
-Thanks for using it.
+* React
+* Node.js
+* Ganache (Test network for development)
+* Solidity (Smart contract programming language)
 
+## Running the application locally
 
-Showcasing of Project:
+**Prerequisites:**
 
-Login Page:
-![Screenshot (140)](https://github.com/MAYANKRATRE10/DocVerse/assets/82997237/fe782fe2-ce4e-4cbb-aa45-3b5f1fb3d710)
+- Node.js and npm (or yarn) installed on your system.
 
+**Steps:**
 
-SignUp Page:
-![Screenshot (139)](https://github.com/MAYANKRATRE10/DocVerse/assets/82997237/e2613c18-174f-488d-b722-630e00a57a47)
+1. **Fork and Clone the Repository:**
+   - Fork the repository on GitHub.
+   - Clone the forked repository to your local system:
 
+     ```bash
+     git clone [https://github.com/](https://github.com/)<your-username>/<your-repository-name>.git
+     ```
 
-Home Page:
-![Screenshot (135)](https://github.com/MAYANKRATRE10/DocVerse/assets/82997237/3fa19074-d563-4130-b4a3-f352ded19f23)
+2. **Install Dependencies:**
+   - Navigate to the project root directory:
 
-![Screenshot (137)](https://github.com/MAYANKRATRE10/DocVerse/assets/82997237/3c7dc8ce-8545-4ee8-ae83-d6d402a21de5)
+     ```bash
+     cd <your-repository-name>
+     ```
 
-![Screenshot (136)](https://github.com/MAYANKRATRE10/DocVerse/assets/82997237/2e508c89-35f5-4ab0-bff0-276138658f11)
+   - Install dependencies in both the `client` and `server` folders:
 
+     ```bash
+     npm install  # or yarn install
+     ```
 
+3. **Deploy the Smart Contract (Optional):**
 
+   - (Optional) Create a `.env` file in the smart contract root directory.
+   - Add the following environment variables to the `.env` file:
+      ```
+      PRIVATE_KEY: (Your blockchain account private key)
+      PROVIDER_URL: (RPC URL of your blockchain network)
+      ```
+   - In the smart contract root directory, deploy the contract using the command:
 
+     ```bash
+     npx hardhat ./scripts/deploy.js --network _networkName
+     ```
+
+     Replace `_networkName` with the desired network (e.g., "ganache" or "ethereum").
+
+4. **Configure Server Environment:**
+   - Create a `.env` file in the server directory root.
+   - Add the following environment variables to the `.env` file:
+      ```
+      PRIVATE_KEY: (Your blockchain account private key)
+      RPC_URL: (RPC URL of your blockchain network)
+      CONTRACT_ADDRESS: (Smart contract address obtained after deployment)
+      ACCOUNT_ADDRESS: (Your blockchain account address)
+      DATABASE_URL: (MongoDB Atlas connection string with database name "docverse")
+      JWT: (JWT secret key)
+      ```
+
+   - Start the server using:
+
+     ```bash
+     npm run dev  # or npm run server
+     ```
+
+5. **Configure Client Environment:**
+   - Create a `.env` file in the client directory root.
+   - Add the following environment variable to the `.env` file:
+      ```
+      VITE_SERVER_URL: (Server URL, e.g., 'http://localhost:3000')
+      ```
+
+   - Start the client application using:
+
+     ```bash
+     npm run dev
+     ```
+
+## Project Showcase
+
+**Login Page:**
+
+![Login Page Screenshot](https://github.com/MAYANKRATRE10/DocVerse/assets/82997237/fe782fe2-ce4e-4cbb-aa45-3b5f1fb3d710)
+
+**Signup Page:**
+
+![Signup Page Screenshot](https://github.com/MAYANKRATRE10/DocVerse/assets/82997237/e2613c18-174f-488d-b722-630e00a57a47)
+
+**Home Page:**
+
+![Home Page Screenshot 1](https://github.com/MAYANKRATRE10/DocVerse/assets/82997237/3fa19074-d563-4130-b4a3-f352ded19f23)
+![Home Page Screenshot 2](https://github.com/MAYANKRATRE10/DocVerse/assets/82997237/3c7dc8ce-8545-4ee8-ae83-d6d402a21de5)
+![Home Page Screenshot 3](https://github.com/MAYANKRATRE10/DocVerse/assets/82997237/2e508c89-35f5-4ab0-bff0-276138658f11)
 
