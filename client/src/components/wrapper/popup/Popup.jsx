@@ -3,7 +3,7 @@ import "./style.scss";
 import Version from "./version/Version";
 import { callServerFile } from "../../../utils/helper";
 
-function Popup({ setPopupWindow, doc ,user}) {
+function Popup({ setPopupWindow, doc ,user,loadData}) {
   const [versList, setVersList] = useState([]);
   const [addVersePopup,setAddVersePopup] = useState(false);
   const [versionRemark,setVersionRemark] = useState("");
@@ -15,6 +15,13 @@ function Popup({ setPopupWindow, doc ,user}) {
   const addVersion = async(e)=>{
     e.preventDefault()
     const formData = new FormData();
+    if(versionRemark.length==0 || e.target.file.length==0){
+      setError("Please Fill The Details");
+      setTimeout(() => {
+          setError("");
+      }, 3000);
+      return;
+    }
 
     formData.append('file', e.target.file.files[0]);
     formData.append('remark', versionRemark);
@@ -32,16 +39,18 @@ function Popup({ setPopupWindow, doc ,user}) {
         }, 3000);
     }
     else{
-      
+      setAddVersePopup(false);
+      loadData();
     }
     console.log(response)
     
 }
 
+
   return (
     <div className="window" >
       <div className="control">
-        <button className="addversebtn" onClick={() => setAddVersePopup(true)}>
+        <button className="addversebtn" onClick={() => setAddVersePopup(!addVersePopup)}>
           Add New Document Version
         </button>
         <button className="close" onClick={() => setPopupWindow(false)}>Close</button>
@@ -53,6 +62,7 @@ function Popup({ setPopupWindow, doc ,user}) {
             method="post"
             encType="multipart/form-data"
           >
+            <div className="item">
             <label htmlFor="versionRemark">Enter Version Remark</label>
             <input
               name="versionRemark"
@@ -63,23 +73,28 @@ function Popup({ setPopupWindow, doc ,user}) {
                 setVersionRemark(e.target.value);
               }}
             />
+            </div>
+            <div className="item">
             <label htmlFor="file">Choose a file</label>
             <input
               name="file"
               id="file"
               type="file"
             />
-            <button type="submit">Add</button>
-            <button onClick={() => setAddVersePopup(false)}>
-              Don't Want To Add
-            </button>
+            </div>
+            <div className="btn">
+              <button className="add" type="submit">Add</button>
+              {/* <button onClick={() => setAddVersePopup(false)}>
+                Don't Want To Add
+              </button> */}
+            </div>
             {error.length != 0 && <p className="error">{error}</p>}
           </form>
         </div>
       )}
       {versList.length != 0 &&
         versList.map((version, index) => {
-          return <Version key={index} version={version} />;
+          return <Version key={index} version={version} loadData={loadData} />;
         })}
     </div>
   );

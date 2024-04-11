@@ -156,8 +156,18 @@ app.post('/addDocument',authMiddleWare,upload.single('file'),async(req,res)=>{
         console.log("documentID:", docID)
         const response = await myContract.methods.addDocument(ipfsHash,req.body.documentName,docID,req.body.remark,user.userID).send({from:accountAddress,gas:9000000});
         console.log("response from addDocument in smart contract",response);
-
-        res.send("Document Successfully Added");
+        
+        const data = {
+            success:true,
+            documentList:[{docID:docID,docName:req.body.documentName,versionList:[{ipfsHash:ipfsHash,
+                remark:req.body.remark,
+                timestamp:null}]}]
+        }
+        res.send({
+            message:"Document Added Successfully",
+            success:true,
+            data:data
+        });
 
     }
     catch(error){
@@ -196,9 +206,19 @@ app.post('/addVersion',authMiddleWare,upload.single('file'),async(req,res)=>{
         console.log("userID:", user.userID);
         console.log("documentID:", req.body.docID)
         const response = await myContract.methods.updateDocument(ipfsHash,req.body.docID,req.body.remark,user.userID).send({from:accountAddress,gas:9000000});
-        console.log("response from addDocument in smart contract",response);
+        console.log("response from updateDocument in smart contract",response);
 
-        res.send("new Document Version Successfully Added");
+        const data ={
+            timestamp:null,
+            remark:req.body.remark,
+            ipfsHash:ipfsHash,
+        };
+
+        res.send({
+            message:"New Version of Document Added Successfully",
+            data:data,
+            success:true
+        });
 
     }
     catch(error){

@@ -11,7 +11,7 @@ function Wrapper({user}) {
     const [remark, setRemark] = useState('');
 
     const [addDocPopup, setAddDocPopup] = useState(false);
-    const [error, setError] = useState("error");
+    const [error, setError] = useState("");
 
     const [docList, setDocList] = useState([]);
 
@@ -32,6 +32,14 @@ function Wrapper({user}) {
     const addDocument = async(e)=>{
         e.preventDefault()
         const formData = new FormData();
+
+        if(documentName.length==0 || e.target.file.length==0 || remark.length==0){
+            setError("Please Fill The Details");
+            setTimeout(() => {
+                setError("");
+            }, 3000);
+            return;
+        }
 
         formData.append('documentName', documentName);
         formData.append('file', e.target.file.files[0]);
@@ -60,24 +68,35 @@ function Wrapper({user}) {
     
     <div className='wrapper'>
         <div className='control'>
-            <button className='addDocbtn' onClick={()=>setAddDocPopup(true)}>Add New Document</button>
+            <button className='addDocbtn' onClick={()=>{
+                setAddDocPopup(!addDocPopup)}
+        }>Add New Document</button>
         </div>
         {addDocPopup && <div className='addDocument'>
         <form onSubmit={addDocument} method='post' encType='multipart/form-data'>
+            <div className='item'>
             <label htmlFor="documentName">Enter Document Name</label>
             <input name='documentName' id='documentName' type="text" value={documentName} onChange={(e)=>{setDocumentName(e.target.value)}} />
-            <label htmlFor="remark">Enter version remark</label>
+            </div>
+            <div className='item'>
+            <label htmlFor="remark">Enter Version Remark</label>
             <input name='remark' id='remark' type="text" value={remark} onChange={(e)=>{setRemark(e.target.value)}}/>
+            </div>
+            <div className='item'>
             <label htmlFor="file">Choose a file</label>
             <input name='file' id='file' type="file"  onChange={(e)=>{setFile(e.target.value)}}/>
-            <button type='submit'>Add</button>
-            <button onClick={()=>setAddDocPopup(false)}>Don't Want To Add</button>
+            </div>
+            
+            <div className='btn'>
+                <button className='add' type='submit'>Add</button>
+                {/* <button className='close' onClick={()=>setAddDocPopup(false)}>close</button> */}
+            </div>
         {error.length!=0 && <p className='error'>{error}</p> }
         </form>
         </div>}
         {docList.length!=0 &&
             docList.map((doc)=>{
-                return (<ViewDocument key={doc.docID} user={user} doc={doc} />)
+                return (<ViewDocument key={doc.docID} user={user} doc={doc} loadData={loadData} />)
             })
         }
 

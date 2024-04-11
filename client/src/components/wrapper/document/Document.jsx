@@ -4,7 +4,7 @@ import { Document, Page } from "react-pdf";
 import Popup from "../popup/Popup";
 
 import "./style.scss";
-function ViewDocument({ doc,user }) {
+function ViewDocument({ doc,user,loadData }) {
   const [document, setDocument] = useState({ url: "", type: "", name: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -44,7 +44,7 @@ function ViewDocument({ doc,user }) {
 
   return (
     <>
-      {popupWindow && <Popup doc={doc} user={user} setPopupWindow={setPopupWindow}/>}
+      {popupWindow && <Popup loadData={loadData} doc={doc} user={user} setPopupWindow={setPopupWindow}/>}
     <div className="docData">
       <div className="document">
         {document.url.length != 0 && document.type != "application/pdf" && (
