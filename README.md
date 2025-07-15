@@ -100,7 +100,7 @@ Here you can create your account, and add documents and for each document, you c
 
 **Home Page:**
 
-![Home Page Screenshot 1](https://github.com/MAYANKRATRE10/DocVerse/assets/82997237/3fa19074-d563-4130-b4a3-f352ded19f23)
+![Home Page Screenshot 1]
 ![Home Page Screenshot 2](https://github.com/MAYANKRATRE10/DocVerse/assets/82997237/3c7dc8ce-8545-4ee8-ae83-d6d402a21de5)
 ![Home Page Screenshot 3](https://github.com/MAYANKRATRE10/DocVerse/assets/82997237/2e508c89-35f5-4ab0-bff0-276138658f11)
 
